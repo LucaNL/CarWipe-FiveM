@@ -1,5 +1,32 @@
 ESX = nil
 
+function doCarWipe(vehicle) 
+    SetVehicleHasBeenOwnedByPlayer(vehicle, false) 
+    SetEntityAsMissionEntity(vehicle, false, false) 
+    DeleteVehicle(vehicle)
+    if Config.UseESX then
+        ESX.Game.DeleteVehicle(vehicle)
+    end
+    DeleteEntity(vehicle)
+    DeleteVehicle(vehicle) 
+    if Config.UseESX then
+        ESX.Game.DeleteVehicle(vehicle)
+    end
+    DeleteEntity(vehicle)
+    if (DoesEntityExist(vehicle)) then 
+        DeleteVehicle(vehicle) 
+        if Config.UseESX then
+            ESX.Game.DeleteVehicle(vehicle)
+        end
+        DeleteEntity(vehicle)
+        DeleteVehicle(vehicle)
+        if Config.UseESX then 
+            ESX.Game.DeleteVehicle(vehicle)
+        end
+        DeleteEntity(vehicle)
+    end 
+end
+
 if Config.UseESX then
     Citizen.CreateThread(function()
         while ESX == nil do
@@ -107,56 +134,10 @@ AddEventHandler("delall", function ()
         if (not IsPedAPlayer(GetPedInVehicleSeat(vehicle, -1))) then 
             if Config.OnlyWipeBroken == true then
                 if GetVehicleEngineHealth(vehicle) <= 100.0 then
-                    SetVehicleHasBeenOwnedByPlayer(vehicle, false) 
-                    SetEntityAsMissionEntity(vehicle, false, false) 
-                    DeleteVehicle(vehicle)
-                    if Config.UseESX then
-                        ESX.Game.DeleteVehicle(vehicle)
-                    end
-                    DeleteEntity(vehicle)
-                    DeleteVehicle(vehicle) 
-                    if Config.UseESX then
-                        ESX.Game.DeleteVehicle(vehicle)
-                    end
-                    DeleteEntity(vehicle)
-                    if (DoesEntityExist(vehicle)) then 
-                        DeleteVehicle(vehicle) 
-                        if Config.UseESX then
-                            ESX.Game.DeleteVehicle(vehicle)
-                        end
-                        DeleteEntity(vehicle)
-                        DeleteVehicle(vehicle)
-                        if Config.UseESX then 
-                            ESX.Game.DeleteVehicle(vehicle)
-                        end
-                        DeleteEntity(vehicle)
-                    end
+                    doCarWipe(vehicle)
                 end
             else
-                SetVehicleHasBeenOwnedByPlayer(vehicle, false) 
-                SetEntityAsMissionEntity(vehicle, false, false) 
-                DeleteVehicle(vehicle)
-                if Config.UseESX then
-                    ESX.Game.DeleteVehicle(vehicle)
-                end
-                DeleteEntity(vehicle)
-                DeleteVehicle(vehicle) 
-                if Config.UseESX then
-                    ESX.Game.DeleteVehicle(vehicle)
-                end
-                DeleteEntity(vehicle)
-                if (DoesEntityExist(vehicle)) then 
-                    DeleteVehicle(vehicle) 
-                    if Config.UseESX then
-                        ESX.Game.DeleteVehicle(vehicle)
-                    end
-                    DeleteEntity(vehicle)
-                    DeleteVehicle(vehicle)
-                    if Config.UseESX then 
-                        ESX.Game.DeleteVehicle(vehicle)
-                    end
-                    DeleteEntity(vehicle)
-                end
+                doCarWipe(vehicle)
             end
             if Config.use10msdelay then
                 Citizen.Wait(10)
